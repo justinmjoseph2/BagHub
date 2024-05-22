@@ -1,5 +1,10 @@
 # BagHub-1
 
+python -m venv myvenv
+myvenv\Scripts\activate
+
+#extract file to the same directory as myvenv
+
 pip install -r requirements.txt
 
 
