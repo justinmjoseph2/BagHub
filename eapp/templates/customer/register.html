@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    .main-menu a {
+    color: black !important;
+}
+
+.container {
+    padding: 30px;
+    margin-top: 150px;
+    background-color: #fff;
+}
+.btn {
+    background-color:  #8080ff
+;
+}
+
+</style>
+<section class="login-area pt-100 pb-100">
+    <div class="container" style="background-color: #fff;">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <h2 class="text-center" style="color: #a538fe;;">REGISTER</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" style="height: 50px;border-color: black;border-radius: 0px;border-width: 1;" id="full-name" name="full-name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" style="height: 50px;border-color: black;border-radius: 0px;border-width: 1;" id="phone-number" name="phone-number" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" style="height: 50px;border-color: black;border-radius: 0px;border-width: 1;" id="your-email" name="your-email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" style="height: 50px;border-color: black;border-radius: 0px;border-width: 1;" id="password" name="password" placeholder="Password" required>
+                        <input type="checkbox" onclick="togglePasswordVisibility('password')"> Show Password
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" style="height: 50px;border-color: black;border-radius: 0px;border-width: 1;" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                        <input type="checkbox" onclick="togglePasswordVisibility('confirm-password')"> Show Password
+                    </div>
+                    <span></span><button type="submit" class="btn btn-outline-danger">Register</button>
+                        <a href="{% url 'login' %}" style="color: #8080ff;margin-left: 400px;">Have an Account? </a>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function togglePasswordVisibility(id) {
+        var x = document.getElementById(id);
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+{% endblock %}

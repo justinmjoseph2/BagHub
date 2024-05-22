@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<style>
+    .main-menu a {
+        color: black !important;
+    }
+</style>
+<main>
+
+    <!-- breadcrumb-area-start -->
+    
+    <!-- breadcrumb-area-end -->
+
+    <!-- login Area Strat-->
+    <section class="login-area pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="basic-login">
+                        <h3 class="text-center mb-60" style="color: #a538fe;;">LOGIN</h3>
+                        <!-- Your Django form starts here -->
+                        <form method="post">
+                            {% csrf_token %}
+                            <div>
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" placeholder="Enter Username or Email address..." required>
+                            </div>
+                            <div>
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="password" placeholder="Enter password..." required>
+                            </div>
+                            <div class="login-action mb-20 fix">
+                                <span class="log-rem f-left">
+                                    <input id="remember" type="checkbox" name="remember" {% if request.POST.remember %} checked {% endif %}>
+                                    <label for="remember">Remember me!</label>
+                                </span>
+                                <span class="forgot-login f-right">
+                                    <a href="{% url 'forgot_password' %}">Lost your password?</a>
+                                </span>
+                            </div>
+                            <button class="btn theme-btn-2 w-100" type="submit"style="margin-bottom: 10px;">Login Now</button>
+                            <span>
+                            <a href="{% url 'register' %}" style="color: #8080ff;">Don't Have an Account? </a>
+                        </span>
+                    </div>
+                            <!-- Register button -->
+                            
+                        </form>
+                        <!-- Your Django form ends here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- login Area End-->
+
+</main>
+{% endblock %}

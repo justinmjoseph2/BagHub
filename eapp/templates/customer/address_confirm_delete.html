@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    .main-menu a {
+        color: black !important;
+    }
+
+    .container {
+        padding: 30px;
+        margin-top: 150px;
+        background-color: #fff;
+    }
+
+    .btn {
+        background-color:  #8080ff;
+        color: #fff;
+    }
+
+    /* Style for the close button */
+    .close-btn {
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 5px;
+    }
+</style>
+<div style="display: flex; align-items: center; text-align: center;">
+<div class="container" >
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete this address?</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Delete" style="margin-right: 5%; background-color: red; font-weight: bolder;">
+        <a href="{% url 'address_list' %}" style="color: #8080ff; font-size: 150%;">Cancel</a>
+    </form>
+
+<!-- Notification Section -->
+<div id="notification" class="alert alert-success" role="alert" style="display: none;">
+    <span>Address Deleted</span>
+    <span class="close-btn">&times;</span>
+</div>
+</div>
+</div>
+<script>
+    // Function to show notification
+    function showNotification() {
+        document.getElementById("notification").style.display = "block";
+    }
+
+    // Function to hide notification
+    function hideNotification() {
+        document.getElementById("notification").style.display = "none";
+    }
+
+    // Add event listener for form submission
+    document.getElementById("messageForm").addEventListener("submit", function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+        
+        // Show notification when the form is submitted
+        showNotification();
+    });
+
+    // Add event listener for close button
+    document.querySelector(".close-btn").addEventListener("click", function() {
+        hideNotification();
+    });
+</script>
+{% endblock %}

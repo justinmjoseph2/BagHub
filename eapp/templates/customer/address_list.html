@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .main-menu a {
+    color: black !important;
+}
+
+.container {
+    padding: 30px;
+    margin-top: 150px;
+    background-color: #fff;
+}
+.btn {
+    background-color:  #8080ff
+;
+}
+</style>
+
+<div class="container">
+    <h2>Address List</h2>
+
+    <!-- Card for adding a new address -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Add New Address</h5>
+            <p class="card-text">Click below to add a new address:</p>
+            <a href="{% url 'address_create' %}" class="btn btn-primary">Add Address</a>
+        </div>
+    </div>
+    {% if request.user.customer.address_set.all %}
+    <!-- Cards for displaying existing addresses -->
+    {% for address in request.user.customer.address_set.all %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ address.recepient_name }}</h5>
+            <p class="card-text">Contact: {{ address.recepient_contact }}</p>
+            <p class="card-text">{{ address.address_line1 }}</p>
+            <p class="card-text">{{ address.city }}, {{ address.state }} - {{ address.postal_code }}</p>
+            <a href="{% url 'address_edit' address.id %}"><i class="fa fa-edit" style="font-size:26px; padding-right: 20px; color:#a538fe;"></i></a>
+            <a href="{% url 'address_delete' address.id %}"><i class="fa fa-trash" style="font-size:26px;color:red;"></i>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No addresses found.</p>
+{% endif %}
+</div>
+
+{% endblock %}
