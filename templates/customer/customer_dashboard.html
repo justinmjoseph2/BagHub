@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .dashboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+  }
+  
+  .card {
+    width: 300px;
+    height: 170px;
+    margin: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .orange {
+    background-color: #fff1f0;
+    color:  #8080ff
+;
+  }
+  
+  .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color:  #8080ff
+; /* Set icon color to white */
+  }
+
+  .main-menu a {
+    color: black !important;
+  }
+  </style>
+</head>
+<body>
+  <div class="dashboard" style="margin-top: 10%;display: flex;">
+    <div class="card orange" style="background-image: url('{% static 'images/g11.jpg' %}'); background-size: cover;height: 80%;width: 30%;">
+      <a href="{% url 'order_list' %}">
+        <i class="fas fa-shopping-basket icon"></i>
+        <h3 style="color: white;">My Orders</h3>
+      </a>
+    </div>
+
+    <div class="card orange" style="background-image: url('{% static 'images/g13.jpg' %}'); background-size: cover;height: 80%;width: 30%;">
+      <a href="{% url 'edit_customer' %}">
+        <i class="fas fa-user-circle icon"></i>
+        <h3 style="color: white;">My Profile</h3>
+      </a>
+    </div>
+    <div class="card orange" style="background-image: url('{% static 'images/g14.jpg' %}'); background-size: cover;height: 80%;width: 30%;">
+      <a href="{% url 'address_list' %}">
+        <i class="fas fa-map-marker-alt icon"></i>
+        <h3 style="color: white;">My Addresses</h3>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
