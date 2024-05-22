@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>BagHub</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/logo/logo.png' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+ 
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/styleA.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+       
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-light navbar-light">
+                <div class="logo" style="padding-bottom: 10%;">
+                    <a href="{% url 'index' %}">
+                        <img src="{% static 'img/logo/logo.png' %}" style="width: 80%; height: 80%;" alt=""/>
+                    </a>
+                </div>
+                
+                <div class="navbar-nav w-100">
+                    <a href="{% url 'supplier_index' %}" class="nav-item nav-link" ><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{% url 'products' %}" class="nav-item nav-link active"><i class="fa fa-shopping-bag" aria-hidden="true"></i>Products</a>                    
+                    <a href="{% url 'purchaseOrders' %}" class="nav-item nav-link"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Orders</a>                    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i></i>Profile</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="{% url 'recentOredrs' %}" class="dropdown-item">Recent Sales</a>
+                            <a href="{% url 'reset_pass' %}" class="dropdown-item">Change Password</a>
+                            <a href="{% url 'logout' %}" class="dropdown-item">LogOut</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        </style>
+
+
+        <!-- Content Start -->
+        <div class="content">
+             <!-- Navbar Start -->
+             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="{% url 'supplier_index' %}" class="nav-link">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span class="" style="font-weight: bold;">Dashboard <i class="fa fa-arrow-right"></i> Products<i class="fa fa-arrow-right"></i>{{ product.name }}</span>                        </a>
+                        
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+
+
+
+
+
+
+
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                  var productBackground = document.getElementById("product-background");
+                  var imageUrl = productBackground.getAttribute("data-background");
+                  productBackground.style.backgroundImage = "url('" + imageUrl + "')";
+                  productBackground.style.backgroundSize = "cover";
+                  productBackground.style.backgroundPosition = "center";
+                });
+              </script>        
+              <!-- shop-area start -->
+              <div id="product-background">
+                <section class="shop-details-area pt-100 pb-100" style="background-color: #f5f1f1;padding: 1%;">
+                    <div style="margin: 5%; background-color: white; border-radius: 10px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-4">
+                                <div class="product-details-img mb-5">
+                                    <div id="product-slider" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="{{ product.image_1.url }}" style="padding: 5%;" class="d-block w-100" alt="" style="margin-top: 20px;border-radius: 5px;">
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-8">
+                              <div style="background:rgb(255, 255, 255); border-radius: 5px;">
+                                  <div class="product-details mb-30 pl-30" style="padding-left: 5%; margin-top: 3.5%; padding-bottom: 5%;">
+                                      <div class="details-cat mb-20"></div>
+                                      <h2 class="pro-details-title mb-15" style="padding-top: 20px;color: black; font-weight: bold; font-size:40px; margin-bottom: 5%;">{{ product.name }}</h2>
+                                      <div class="details-price mb-20">
+                                          <span style="padding-top: 50px;color: #8080ff; font-size:30px; font-weight:normal;">₹ {{ product.price }}</span>
+                                      </div>
+                                      <div class="product-variant">
+                                          <div class="product-info-list variant-item">
+                                             
+                                            <span style="padding-top: 50px;color: #000000; font-weight: bold;">Category:</span> {{ product.subcategory }}
+                                                {% if product.quantity_in_stock > 0 %}<br>
+                                                    <span style="padding-top: 50px;color: #000000; margin-top: 10%; font-weight: bold;">Stock:</span> <span class="in-stock">{{ product.quantity_in_stock }}</span>
+                                                {% else %}
+                                                    <span>Stock:</span> <span class="out-of-stock" style="color: red;">Out of Stock</span>
+                                                {% endif %}<br>
+                                                    <h4 style="padding-top: 5%;color: #000000; font-weight: bold; font-size:25px;">Description</h4>
+                                            <span>{{ product.description }}</span>
+                                            
+                                          </div>
+                                          
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div style="margin: 5%; background-color: white; border-radius: 10px;">
+                <h1 style="margin-left: 5%; padding-top: 5%;">Total Sales for {{ product.name }}</h1>
+                <div class="col-md-8 offset-md-2">
+                    <img src="data:image/png;base64,{{ chart_image }}" alt="Revenue Graph" class="img-fluid mb-4">
+                   
+                </div>
+                </div>
+
+
+<div style="padding:10%;">
+                <div class="d-flex justify-content-center" style="padding-left: 20%;">
+                    {% for link in month_links %}
+                        <a href="{{ link }}" class="btn btn-outline-secondary mx-2">{{ link|cut:"?month=" }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+                
+
+
+
+
+
+
+                
+        </div>
+                </section>
+            </div>
+
+
+
+
+
+
+
+
+             <!-- Footer Start -->
+             <div class="container-fluid pt-4 px-4">
+                <div class="bg-light rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="http://127.0.0.1:8000/">BagHub</a>, All Right Reserved. 
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                        Distributed By <a class="border-bottom" href="https://mariancollege.org/" target="_blank">MCKA</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

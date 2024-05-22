@@ -1,0 +1,238 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+
+<style>
+  @keyframes moveGradient {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+    .main-menu a {
+    color: black !important;
+  }
+  
+  .container {
+    margin-top: 100px;
+  }
+  
+  #cart-button {
+    border: none;
+    background-color: #fcfcfc; /* Change color as needed */
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    border-radius: 60%; /* Make it round */
+    font-size: 20px; /* Increase font size */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#cart-button:hover {
+    background-color:  #8080ff
+; /* Darker color on hover */
+}
+ 
+
+
+#filter-select {
+    color: #a538fe;
+    border-radius: 5px;
+    width: 90%;
+    height: 50%;
+    font-weight: bolder;
+    border-width: 1;
+}
+
+#item{
+  align-items: center;
+  display: flex;
+  text-align: center;
+  
+}
+
+
+  </style>
+</style>
+<!-- shop-area start -->
+<section class="shop-area pt-100 pb-100">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 col-lg-8">
+        <!-- tab filter -->
+        <div class="row mb-10">
+          <div class="col-xl-12 col-lg-6 col-md-12">
+            <div class="shop-widget" style="margin-bottom: 50px;margin-left: 25px;">
+              <h3 class="shop-title" style="margin-left: 5px;margin-top: 10%;
+              font-weight: bold;
+background-image: linear-gradient(to right, #8080ff, #ff8080, #c023c0, #9720d7, #2054d7, #8080ff, #ff8080, #c023c0, #9720d7, #2054d7, #8080ff);
+background-size: 200% 100%;
+color: transparent; 
+-webkit-background-clip: text;
+background-clip: text;
+animation: moveGradient 5s linear infinite;">Search by</h3>
+              <form action="{% url 'search_results' %}" method="GET" class="shop-search" style="width: 800px;">
+                <input type="text" style="border-radius: 5px;" name="q" placeholder="Your keyword...." />
+                <button type="submit" style="border-radius: 5px;"><i class="fa fa-search"></i></button>
+              </form>
+            </div>
+          </div>
+          <div class="col-xl-7 col-lg-6 col-md-6">
+            <div class="shop-tab f-right">
+              <ul class="nav text-center" id="myTab" role="tablist">
+              </ul>
+            </div>
+            
+          </div>
+        </div>
+        <!-- tab content -->
+        <div class="tab-content" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div class="row">
+              {% for product in products %}
+              <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card mb-4" style="border: 1px solid #cacaec; box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1); border-radius: 5px;height: 420px;">
+
+                <div class="product-wrapper mb-50" style="margin: 15px;">
+                  <div class="product-img mb-25">
+                    <a href="{% url 'product_detail' product.id %}">
+                      <img src="{{ product.image_1.url }}" alt="" />
+                      {% if product.image_2 %}
+                      <img
+                        class="secondary-img"
+                        src="{{ product.image_2.url }}"
+                        alt=""
+                      />
+                      {% endif %}
+                    </a>
+                    <div class="product-action text-center">
+                        <form id="add-to-cart-form" action="{% url 'add_to_cart' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            
+                        </form> 
+                      
+                    </div>
+                  </div>
+                  <div class="product-content pr-0">
+                    <div class="pro-cat mb-10">
+                      <a href="{% url 'product_detail' product.id %}">{{ product.subcategory }}</a>
+                    </div>
+                    <h4>
+                      <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+                    </h4>
+                    <div class="product-meta">
+                      <div class="pro-price">
+                        <span>₹ {{ product.price }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="profile"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+          ></div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-4">
+        <div class="site-section site-blocks-2" style="margin-top: 35px; display: flex; text-align: center;">
+          <div class="container">
+            <h4>Filter Options</h4>
+            <select id="filter-select">
+              <option id="item" value="default" style="margin-bottom: 5px;">Default</option>
+              <option id="item" value="ascending" style="margin-bottom: 5px;">Name (A-Z)</option>
+              <option id="item" value="descending" style="margin-bottom: 5px;">Name (Z-A)</option>
+              <option id="item" value="price_high_to_low" style="margin-bottom: 5px;">Price (High to Low)</option>
+              <option id="item" value="price_low_to_high" style="margin-bottom: 5px;">Price (Low to High)</option>
+            </select>
+          </div>
+        </div>
+        <div class="sidebar-shop">
+            
+
+            
+
+            <div class="site-section site-blocks-2" style="margin-top: 35px; display: flex; text-align: center;">
+              <div class="container">
+                <h3>Categories</h3>
+            
+                {% for category in categories %}
+                    {% if forloop.counter <= 5 %}
+                        <div class="col-md-12" data-aos="fade" data-aos-delay="">
+                            <div class="card mb-4" style="border: 1px solid #cacaec; box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1); border-radius: 5px;height: auto;">
+                                <a href="{% url 'category_products' category.id %}">
+                                    <figure class="image" style="margin: 15px;">
+                                        {% if category.image_1 %}
+                                            <img src="{{ category.image_1.url }}" alt="" class="img-fluid">
+                                        {% endif %}
+                                    </figure>
+                                    <div class="text">
+                                        <a href="{% url 'category_products' category.id %}">
+                                            <h6>{{ category.category_name }}</h6>
+                                        </a>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
+          </div>         
+
+            
+
+            
+
+            <div class="shop-widget">
+              <div class="shop-sidebar-banner">
+                <a href="shop.html"
+                  ><img src="img/banner/shop-banner.jpg" alt=""
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- shop-area end -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Function to handle filter change event
+    $('#filter-select').change(function() {
+      var selectedFilter = $(this).val();
+      
+      // Make AJAX request to Django view with selected filter
+      $.ajax({
+        url: '{% url 'filter_products' %}',
+        type: 'GET',
+        data: {
+          filter: selectedFilter
+        },
+        success: function(data) {
+          // Update content of the 'myTabContent' element with filtered data
+          $('#myTabContent').html($(data).find('#myTabContent').html());
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}
